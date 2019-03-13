@@ -9,10 +9,10 @@ script:
   - docker run kadishay/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t kadishay/multi-client -f ./client ./client
-  - docker build -t kadishay/multi-nginx -f ./nginx ./nginx
-  - docker build -t kadishay/multi-server -f ./server ./server
-  - docker build -t kadishay/multi-worker -f ./worker ./worker
+  - docker build -t kadishay/multi-client ./client
+  - docker build -t kadishay/multi-nginx ./nginx
+  - docker build -t kadishay/multi-server ./server
+  - docker build -t kadishay/multi-worker ./worker
   #login to docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #push
