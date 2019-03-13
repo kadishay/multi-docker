@@ -1,0 +1,22 @@
+sudo: reuired
+services:
+  - docker
+
+before_install: 
+  - docker build -t kadishay/react-rest -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run kadishay/react-test npm test -- --coverage
+
+after_sucess:
+  - docker build -t kadishay/multi-client -f ./client ./client
+  - docker build -t kadishay/multi-nginx -f ./nginx ./nginx
+  - docker build -t kadishay/multi-server -f ./server ./server
+  - docker build -t kadishay/multi-worker -f ./worker ./worker
+  #login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #push
+  - docker push kadishay/multi-client
+  - docker push kadishay/multi-nginx
+  - docker push kadishay/multi-server
+  - docker push kadishay/multi-worker
