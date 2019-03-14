@@ -1,0 +1,36 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinition": [
+        {
+            "name": "client",
+            "image": "kadishay/multi-client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "kadishay/multi-server",
+            "hostname": "api",
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "kadishay/multi-worker",
+            "hostname": "worker",
+            "essential": false
+        },
+        {
+            "name": "nging",
+            "image": "kadishay/multi-nging",
+            "hostname": "nging",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]
+        }
+    ]
+}
